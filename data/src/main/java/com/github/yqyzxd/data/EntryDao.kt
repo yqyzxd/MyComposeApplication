@@ -18,6 +18,9 @@ abstract class EntryDao<E:Entry> {
     @Delete
     abstract suspend fun delete(entry: E)
 
+    @Delete
+    abstract suspend fun deleteAll()
+
     @Transaction
     open suspend fun withTransaction(tx:suspend ()->Unit)=tx()
 
