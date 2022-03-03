@@ -1,6 +1,8 @@
 package com.github.yqyzxd.data
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 
 /**
@@ -14,5 +16,14 @@ import androidx.room.PrimaryKey
  *  <author> <time> <version> <desc>
  *
  */
-@Entity()
-data class User(@PrimaryKey val uid:String)
+@Entity(
+    tableName = "user",
+    indices = [
+        Index(value = ["uid"], unique = true)
+    ],
+)
+data class UserEntry(
+    @PrimaryKey(autoGenerate = true) override val id: Long,
+    @ColumnInfo val uid:String,
+    @ColumnInfo override val page: Int
+):PaginatedEntry
