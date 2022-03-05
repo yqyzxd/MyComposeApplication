@@ -25,5 +25,6 @@ import androidx.room.PrimaryKey
 data class UserEntry(
     @PrimaryKey(autoGenerate = true) override val id: Long,
     @ColumnInfo val uid:String,
+    @ColumnInfo val avatar:String,
     @ColumnInfo override val page: Int
 ):PaginatedEntry

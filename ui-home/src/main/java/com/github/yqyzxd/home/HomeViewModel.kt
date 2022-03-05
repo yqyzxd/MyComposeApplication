@@ -1,5 +1,6 @@
 package com.github.yqyzxd.home
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingConfig
@@ -7,10 +8,12 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.github.yqyzxd.data.UserEntry
 import com.github.yqyzxd.domain.observers.ObservePagedHomeUsers
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-
-class HomeViewModel constructor(pagingInteractor:ObservePagedHomeUsers) : ViewModel() {
+@HiltViewModel
+class HomeViewModel @Inject constructor(pagingInteractor:ObservePagedHomeUsers) : ViewModel() {
 
     val pagedList:Flow<PagingData<UserEntry>> = pagingInteractor.flow.cachedIn(viewModelScope)
 

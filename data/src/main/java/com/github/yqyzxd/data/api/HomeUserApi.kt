@@ -7,6 +7,6 @@ import retrofit2.http.Query
 
 interface HomeUserApi {
 
-    @GET("user_list_new")
+    @GET("user_city")
     suspend fun users(@Query("page") page:Int,@Query("limit")limit:Int):HomeUserResponse
 }
