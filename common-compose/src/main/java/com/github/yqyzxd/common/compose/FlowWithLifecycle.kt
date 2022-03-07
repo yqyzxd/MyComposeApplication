@@ -1,4 +1,4 @@
-package com.github.yqyzxd.home
+package com.github.yqyzxd.common.compose
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember

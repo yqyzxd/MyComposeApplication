@@ -4,7 +4,7 @@ ext{
     pagingVersion='3.1.0'
     lifecycleVersion='2.4.1'
     androidxHilt='1.0.0'
-
+    pagingComposeVersion='1.0.0-alpha14'
 
     storeVersion='4.0.4-KT15'
 
@@ -13,19 +13,20 @@ ext{
             room=[
                     runtime:    "androidx.room:room-runtime:$roomVersion",
                     ktx:        "androidx.room:room-ktx:$roomVersion",
-                    paging:     "androidx.room:room-paging:$room_version",
+                    paging:     "androidx.room:room-paging:$roomVersion",
                     compiler:   "androidx.room:room-compiler:$roomVersion",
             ],
-            paging=[
-                    runtime:    "androidx.paging:paging-runtime:$paging_version",
-                    ktx:        "androidx.paging:paging-runtime-ktx:$paging_version"
+            paging3=[
+                    runtime:    "androidx.paging:paging-runtime:$pagingVersion",
+                    ktx:        "androidx.paging:paging-runtime-ktx:$pagingVersion",
             ],
             lifecycle=[
-                    viewmodel:  "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version",
-                    compose:    "androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_version"
+                    runtime:    "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion",
+                    viewmodel:  "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion",
+                    compose:    "androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycleVersion"
             ],
             compose=[
-
+                    paging_compose :  "androidx.paging:paging-compose:$pagingComposeVersion"
             ]
     ]
 }

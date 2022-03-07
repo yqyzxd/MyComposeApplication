@@ -1,4 +1,4 @@
-package com.github.yqyzxd.home
+package com.github.yqyzxd.common.compose
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyItemScope
