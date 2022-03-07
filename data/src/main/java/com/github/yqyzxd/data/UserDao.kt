@@ -24,4 +24,10 @@ abstract class UserDao:PaginatedEntryDao<UserEntry>() {
 
     @Query("SELECT MAX(page) FROM user")
     abstract override suspend fun getLastPage(): Int?
+
+    @Query("SELECT * FROM user WHERE uid=:uid")
+    abstract fun findByUidFlow(uid:String):Flow<UserEntry?>
+
+    @Query("SELECT * FROM user WHERE uid=:uid")
+    abstract suspend fun findByUid(uid:String):UserEntry?
 }

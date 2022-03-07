@@ -23,7 +23,7 @@ import androidx.room.PrimaryKey
     ],
 )
 data class UserEntry(
-    @PrimaryKey(autoGenerate = true) override val id: Long,
+    @PrimaryKey(autoGenerate = true) override var id: Long,
     @ColumnInfo val uid:String,
     @ColumnInfo val avatar:String,
     @ColumnInfo override var page: Int

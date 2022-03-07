@@ -7,7 +7,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 fun UserDetailScreen(){
     UserDetailScreen(viewModel = viewModel())
 }
-
+@Composable
 internal fun UserDetailScreen(
     viewModel: UserDetailViewModel
 ){
