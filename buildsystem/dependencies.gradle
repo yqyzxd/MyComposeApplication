@@ -1,0 +1,31 @@
+ext{
+    appcompatVersion='1.4.1'
+    roomVersion='2.4.2'
+    pagingVersion='3.1.0'
+    lifecycleVersion='2.4.1'
+    androidxHilt='1.0.0'
+
+
+    storeVersion='4.0.4-KT15'
+
+
+    jetpack=[
+            room=[
+                    runtime:    "androidx.room:room-runtime:$roomVersion",
+                    ktx:        "androidx.room:room-ktx:$roomVersion",
+                    paging:     "androidx.room:room-paging:$room_version",
+                    compiler:   "androidx.room:room-compiler:$roomVersion",
+            ],
+            paging=[
+                    runtime:    "androidx.paging:paging-runtime:$paging_version",
+                    ktx:        "androidx.paging:paging-runtime-ktx:$paging_version"
+            ],
+            lifecycle=[
+                    viewmodel:  "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version",
+                    compose:    "androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_version"
+            ],
+            compose=[
+
+            ]
+    ]
+}

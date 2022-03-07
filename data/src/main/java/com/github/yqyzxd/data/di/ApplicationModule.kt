@@ -3,6 +3,7 @@ package com.github.yqyzxd.data.di
 import android.content.Context
 import androidx.room.Room
 import com.github.yqyzxd.data.AppRoomDatabase
+import com.github.yqyzxd.data.HeaderInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -29,12 +30,11 @@ object ApplicationModule {
 
         loggingInterceptor.level = level
 
-      //  val protoIntercept = ProtoIntercept()
+
         val httpClientBuilder = OkHttpClient.Builder()
         httpClientBuilder
             .addInterceptor(loggingInterceptor)
-            //.addInterceptor(HeaderInterceptor())
-            //.addInterceptor(protoIntercept)
+            .addInterceptor(HeaderInterceptor())
             .connectTimeout(20, TimeUnit.SECONDS) //设置连接超时时间
             .readTimeout(20, TimeUnit.SECONDS) //设置读取超时时间
 
@@ -43,7 +43,7 @@ object ApplicationModule {
         return Retrofit
             .Builder()
             .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl("https://api.marryu520.cn/")
+            .baseUrl("https://test.marryu520.cn/")
             .client(client)
             .build()
     }
