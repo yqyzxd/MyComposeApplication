@@ -1,6 +1,5 @@
 package com.github.yqyzxd.home
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingConfig
@@ -24,8 +23,8 @@ class HomeViewModel @Inject constructor(pagingInteractor:ObservePagedHomeUsers) 
 
     companion object{
         val PAGING_CONFIG = PagingConfig(
-            pageSize = 20,
-            initialLoadSize = 20
+            pageSize = 10,
+            initialLoadSize = 10
         )
     }
 }

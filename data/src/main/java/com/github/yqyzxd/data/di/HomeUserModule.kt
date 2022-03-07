@@ -32,24 +32,41 @@ object HomeUserModule {
 
         return StoreBuilder.from(
             fetcher = Fetcher.of { page: Int ->
-                api.users(page, 20)
+                println("HomeUserStore fetcher")
+                api.users(page, 10).also {
+                    it.items?.forEach { entry->
+                        entry.page=page
+                    }
+                }
             },
             sourceOfTruth = SourceOfTruth.of(
                 reader = { page ->
+
                     userDao.entriesObservable(page).map { entries ->
                         when {
-                            entries.isEmpty() -> null
-                            else -> entries
+                            entries.isEmpty() -> {
+                                println("HomeUserStore reader null")
+                                null
+                            }
+                            else ->{
+                                println("HomeUserStore reader entries ${entries.size}")
+                                entries
+                            }
                         }
                     }
                 },
                 writer = { page, response ->
+
                     userDao.withTransaction {
-                        var users = response.items?.users ?: mutableListOf()
-                        if (page == 0) {
+                        var users = response.items ?: mutableListOf()
+                        if (page == 1) {
+                            println("HomeUserStore writer deleteAll")
                             userDao.deleteAll()
+                            println("HomeUserStore writer insertAll")
                             userDao.insertAll(users)
+
                         } else {
+                            println("HomeUserStore writer updatePage")
                             userDao.updatePage(page, users)
                         }
 

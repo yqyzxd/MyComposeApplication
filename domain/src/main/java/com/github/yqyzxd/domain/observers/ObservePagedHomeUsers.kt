@@ -23,10 +23,13 @@ class ObservePagedHomeUsers @Inject constructor(
         return Pager(
             config = params.pagingConfig,
             remoteMediator = PaginatedEntryRemoteMediator{ page ->
+                println("ObservePagedHomeUsers remoteMediator")
                 homeUsersInteractor.executeSync(HomeUsersInteractor.Params(page = page, forceRefresh = true))
-            },
-            pagingSourceFactory = userDao::entriesPagingSource
-        ).flow
+            }
+        ){
+            println("ObservePagedHomeUsers entriesPagingSource")
+            userDao.entriesPagingSource()
+        }.flow
     }
 
     data class Params(

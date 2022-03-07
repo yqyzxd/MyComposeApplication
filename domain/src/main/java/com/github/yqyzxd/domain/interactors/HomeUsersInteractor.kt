@@ -15,15 +15,17 @@ class HomeUsersInteractor @Inject constructor(
 ) : Interactor<HomeUsersInteractor.Params>() {
 
     override suspend fun doWork(params: Params) {
+
         withContext(Dispatchers.IO) {
             val page = when {
-                params.page >= 0 -> params.page
+                params.page >= 1 -> params.page
                 params.page == Page.NEXT_PAGE -> {
                     val lastPage = userDao.getLastPage()
                     if (lastPage != null) lastPage + 1 else 0
                 }
-                else -> 0
+                else -> 1
             }
+            println("HomeUsersInteractor doWork fetch")
             homeUserStore.fetch(page, forceFresh = params.forceRefresh)
 
 

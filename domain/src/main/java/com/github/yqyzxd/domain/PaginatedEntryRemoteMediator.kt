@@ -12,6 +12,7 @@ class PaginatedEntryRemoteMediator<E>(
 ) :RemoteMediator<Int,E>() where E:PaginatedEntry{
 
 
+
     override suspend fun load(loadType: LoadType, state: PagingState<Int, E>): MediatorResult {
         val nextPage = when(loadType){
             LoadType.REFRESH -> 1
@@ -24,6 +25,7 @@ class PaginatedEntryRemoteMediator<E>(
 
         return try {
             fetch(nextPage)
+            println("PaginatedEntryRemoteMediator MediatorResult.Success")
             MediatorResult.Success(endOfPaginationReached = false)
         }catch (t:Throwable){
             MediatorResult.Error(t)

@@ -1,11 +1,11 @@
 package com.github.yqyzxd.home
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.material.Card
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
@@ -16,8 +16,11 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.paging.LoadState
+import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import coil.compose.rememberImagePainter
+import com.github.yqyzxd.data.Entry
+import com.github.yqyzxd.data.PaginatedEntry
 import com.github.yqyzxd.data.UserEntry
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
@@ -32,9 +35,19 @@ fun HomeScreen(){
 
 @Composable
 internal fun HomeScreen(viewModel: HomeViewModel){
-    val lazyPagingItems = rememberFlowWithLifecycle(flow = viewModel.pagedList).collectAsLazyPagingItems()
+    EntryGrid(lazyPagingItems =  rememberFlowWithLifecycle(flow = viewModel.pagedList).collectAsLazyPagingItems())
+
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun EntryGrid(
+    lazyPagingItems: LazyPagingItems<UserEntry>
+){
     val scaffoldState = rememberScaffoldState()
 
+    println("HomeScreen lazyPagingItems ${lazyPagingItems.itemCount}")
+    println("HomeScreen loadState ${  lazyPagingItems.loadState.refresh== LoadState.Loading}")
     lazyPagingItems.loadState.appendErrorOrNull()?.let { message->
         LaunchedEffect(message){
             scaffoldState.snackbarHostState.showSnackbar(message = message.message)
@@ -50,40 +63,39 @@ internal fun HomeScreen(viewModel: HomeViewModel){
     Scaffold(
         scaffoldState = scaffoldState,
 
-    ) { paddingValues ->
+        ) { paddingValues ->
 
         SwipeRefresh(
             state = rememberSwipeRefreshState(isRefreshing = lazyPagingItems.loadState.refresh== LoadState.Loading),
             onRefresh = { lazyPagingItems.refresh() },
             indicatorPadding = paddingValues
         ) {
-            LazyColumn(
-                contentPadding = paddingValues,
-                modifier = Modifier.fillMaxSize()
+
+            LazyVerticalGrid(
+                modifier=Modifier.fillMaxSize(),
+                cells = GridCells.Fixed(2),
             ){
-                itemsInGrid(
-                    lazyPagingItems = lazyPagingItems,
-                    columns = 2,
-                    contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
-                    verticalItemPadding = 8.dp,
-                    horizontalItemPadding = 8.dp
-                ){ entry->
-                   when{
-                       entry !=null->{
-                           UserCard(entry = entry)
-                       }
-                       else ->{
-                           PlaceholderUserCard()
-                       }
-                   }
+                items(lazyPagingItems.itemCount){ index->
+                    val mod = Modifier
+                        .aspectRatio(2 / 3f)
+                        .fillMaxWidth()
+                    val entry=lazyPagingItems[index]
+                    when{
+                        entry !=null->{
+                            UserCard(entry = entry, modifier = mod)
+                        }
+                        else ->{
+                            PlaceholderUserCard(modifier = mod)
+                        }
+                    }
                 }
+
             }
+
         }
 
     }
-
 }
-
 
 @Composable
 fun UserCard(modifier: Modifier=Modifier,entry:UserEntry){

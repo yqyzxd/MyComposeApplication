@@ -13,10 +13,10 @@ import com.github.yqyzxd.data.UserEntry
  *  <author> <time> <version> <desc>
  *
  */
-class HomeUserResponse :BaseResponse<HomeUserResponse.Items>(){
+class HomeUserResponse :BaseResponse<List<UserEntry>>(){
 
 
-    class Items{
+   /* class Items{
         var users:List<UserEntry> = mutableListOf()
-    }
+    }*/
 }
