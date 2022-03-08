@@ -1,8 +1,7 @@
-package com.github.yqyzxd.ui.user
+package com.github.yqyzxd.domain.observers
 
 import com.dropbox.android.external.store4.StoreRequest
 import com.dropbox.android.external.store4.StoreResponse
-import com.dropbox.android.external.store4.get
 import com.github.yqyzxd.data.UserEntry
 import com.github.yqyzxd.data.di.UserDetailStore
 import com.github.yqyzxd.domain.SubjectInteractor

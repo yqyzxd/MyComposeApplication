@@ -1,10 +1,12 @@
 package com.github.yqyzxd.ui.user
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.yqyzxd.common.compose.ObservableLoadingCounter
 import com.github.yqyzxd.common.compose.UiMessageManager
 import com.github.yqyzxd.data.UserEntry
+import com.github.yqyzxd.domain.observers.ObserveUserDetail
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
@@ -13,13 +15,15 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class UserDetailViewModel @Inject constructor(
-    private var observeUserDetail:ObserveUserDetail
+    savedStateHandle:SavedStateHandle,
+    private val observeUserDetail:ObserveUserDetail
 ):ViewModel() {
 
 
     private val loadingState = ObservableLoadingCounter()
     private val uiMessageManager = UiMessageManager()
 
+    private val userId:String=savedStateHandle.get("userId")!!
 
     val state= combine(
         observeUserDetail.flow
@@ -34,4 +38,7 @@ internal class UserDetailViewModel @Inject constructor(
     )
 
 
+    init {
+        observeUserDetail(ObserveUserDetail.Params(userId,true))
+    }
 }
